@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>To-Do List</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">To-Do List</h1>
+        <ul class="list-group">
+            {% for todo in todo_items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    {% if todo.completed %}
+                    <strike>{{ todo.title }}</strike>
+                    {% else %}
+                    <span>{{ todo.title }}</span>
+                    <small class="text-muted"> {{ todo.created_at }}</small>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if not todo.completed %}
+                    <a href="{% url 'mark_completed' todo.id %}" class="btn btn-sm btn-success me-2">Mark as Completed</a>
+                    {% endif %}
+                    <a href="{% url 'delete_todo' todo.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="text-center mt-4">
+            <a href="{% url 'add_todo' %}" class="btn btn-primary">Add new to-do</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
